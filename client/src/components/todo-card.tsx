@@ -4,20 +4,22 @@ import "../App.css";
 import { ChangeEvent } from "react";
 import React from "react";
 import { useCallback } from "react";
-import { usePostData } from "../@hooks/use-post";
 
 export const Todo = ({ id, title, created_At, completed, content }: Itodo) => {
     const date = new Date(created_At).toDateString();
     const handleCompleted = useCallback(
         async (e: React.MouseEvent<HTMLButtonElement>) => {
             try {
-                const response = await fetch("http://localhost/api/todos", {
-                    headers: {
-                        "Content-Type": "application/json",
+                const response = await fetch(
+                    `http://localhost/api/todos/${id}`,
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ id: id, completed: !completed }),
+                        method: "PUT",
                     },
-                    body: JSON.stringify({ id: id, completed: !completed }),
-                    method: "PUT",
-                });
+                );
                 if (response.ok) {
                     console.log(response);
                 }
@@ -28,15 +30,16 @@ export const Todo = ({ id, title, created_At, completed, content }: Itodo) => {
         [id, title, content, completed],
     );
 
-    const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleDelete = async (e: React.MouseEvent<HTMLButtonElement>) => {
         try {
-            const { isSuccessful } = usePostData(
-                "http://localhost/api/todos",
-                id,
-                "DELETE",
-            );
-            if (isSuccessful) {
-                console.log("fuck you ");
+            const response = await fetch(`http://localhost/api/todos/${id}`, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                method: "DELETE",
+            });
+            if (response.ok) {
+                console.log(response);
             }
         } catch (error) {
             console.log(error);
