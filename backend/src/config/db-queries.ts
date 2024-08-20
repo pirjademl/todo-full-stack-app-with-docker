@@ -33,15 +33,24 @@ async function updateNote(
     body: { title: string; content: string; completed: number },
 ) {
     const { title, content, completed } = body;
-    console.log({ title, content, completed });
+    if (!title && !content) {
+        try {
+            const result = await pool.query(
+                `update  todos set completed=? where id =?`,
+                [completed ?? 0, id],
+            );
+            return result;
+        } catch (error: any) {
+            console.log(error);
+        }
+    }
     try {
         const result = await pool.query(
-            `update  todos set completed=?, title=?, content=? where id =?`,
-            [completed ?? 0, title, content, id],
+            `UPDATE todos SET title=? content=? completed=? WHERE id=? `,
+            [title, content, completed ?? 0, id],
         );
-        console.log(result);
         return result;
-    } catch (error: any) {
+    } catch (error) {
         console.log(error);
     }
 }
