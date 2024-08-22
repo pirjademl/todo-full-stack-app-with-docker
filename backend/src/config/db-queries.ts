@@ -2,7 +2,9 @@ import { createNotePayload } from '../types/types';
 const pool = require('./connect-db');
 
 async function getNotes() {
-    const [rows] = await pool.query('SELECT * FROM todos ');
+    const [rows] = await pool.query(
+        'SELECT * FROM todos ORDER BY created_At desc',
+    );
     return rows;
 }
 
@@ -11,7 +13,6 @@ async function getNote(id: string) {
         `select id,title,content from todos where id=?`,
         [id],
     );
-    console.log(result);
     return result[0];
 }
 
