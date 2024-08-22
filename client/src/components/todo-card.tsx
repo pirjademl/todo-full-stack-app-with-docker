@@ -46,7 +46,7 @@ export const Todo = ({ id, title, created_At, completed, content }: Itodo) => {
     };
     return (
         <div key={id} className="todo-card">
-            <div className="flex gap-2 justify-between">
+            <div className="todo-top">
                 <span>{date} </span>
                 <div className="action-buttons  gap-2">
                     <button onClick={handleCompleted} className="button-check">

@@ -40,26 +40,23 @@ export const AddTodo: FC<addTodoProps> = ({ onAddTodo }) => {
     };
 
     return (
-        <form
-            onSubmit={handleSubmit}
-            className="flex w-full  justify-between gap-2"
-        >
-            <div className="flex gap-2">
+        <form onSubmit={handleSubmit} className="form">
+            <div className="input-group">
                 <input
                     required
                     name="title"
-                    className="w-full input"
+                    className="form-input"
                     onChange={handleChange}
                     placeholder="enter title"
                 />
                 <input
                     name="content"
-                    className="w-full input textarea"
+                    className="form-input"
                     onChange={handleChange}
                     placeholder="enter content"
                 />
             </div>
-            <button className="button w-full" type="submit">
+            <button className="submit-button" type="submit">
                 Add note
             </button>
         </form>
