@@ -13,6 +13,9 @@ const getNote = async (req: Request, res: Response) => {
         res.status(403).json({ message: 'id must be specified' });
     }
     const result = await querySingleNote(id);
+    if (!result) {
+        res.status(404).json({ message: 'Not found' });
+    }
     res.status(200).json(result);
 };
 
