@@ -51,7 +51,7 @@
     border:none;
     cursor:pointer;
     transition:colors;
-    transition:1s linear;
+    transition:1s  300ms;
     width:100%;
 }
 .button-trash:hover{

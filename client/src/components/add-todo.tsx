@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FC, FormEvent, useState } from "react";
 import "../App.css";
 export interface Itodo {
     id: string;
@@ -7,8 +7,11 @@ export interface Itodo {
     completed: number;
     created_At: string;
 }
+interface addTodoProps {
+    onAddTodo: (todo: Itodo) => void;
+}
 
-export const AddTodo = () => {
+export const AddTodo: FC<addTodoProps> = ({ onAddTodo }) => {
     const [todoItem, setTodoItem] = useState({
         title: "",
         content: "",
@@ -16,7 +19,7 @@ export const AddTodo = () => {
     });
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const result = await fetch("http://localhost/api/todos/", {
+        const response = await fetch("http://localhost/api/todos/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -24,7 +27,8 @@ export const AddTodo = () => {
 
             body: JSON.stringify(todoItem),
         });
-        console.log(result);
+        const newTodo = await response.json();
+        onAddTodo(newTodo);
     };
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

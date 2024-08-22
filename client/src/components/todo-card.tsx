@@ -1,6 +1,5 @@
 import { Itodo } from "./add-todo";
 import { CheckCheck, Trash2 } from "lucide-react";
-import "../App.css";
 import { ChangeEvent } from "react";
 import React from "react";
 import { useCallback } from "react";

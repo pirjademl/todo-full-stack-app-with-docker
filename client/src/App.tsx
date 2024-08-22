@@ -1,23 +1,28 @@
-import "./App.css";
-import { useFetch } from "./@hooks/use-fetch";
 import { AddTodo, Itodo } from "./components/add-todo";
 import { Todo } from "./components/todo-card";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
+import "./App.css";
 function App() {
-    console.log("rerendered");
-    const { isLoading, isError, data } = useFetch("http://localhost/api/todos");
-    if (isLoading) {
-        return <p>loading.....</p>;
-    }
-    if (isError) {
-        return <p>error Laoding data</p>;
+    const [todos, setTodos] = useState<Itodo[]>([]);
+
+    useEffect(() => {
+        fetch("http://localhost/api/todos")
+            .then((todos) => todos.json())
+            .then(setTodos);
+    });
+
+    const onNewTodo = (todo: Itodo) => {
+        setTodos((prevtodo) => [...prevtodo, todo]);
+    };
+    if (!todos) {
+        return <p>Error</p>;
     }
 
     return (
-        <div>
-            <AddTodo />
+        <div className="">
+            <AddTodo onAddTodo={onNewTodo} />
             <div className="grid">
-                {data.map((todo: Itodo) => (
+                {todos?.map((todo: Itodo) => (
                     <Todo
                         title={todo.title}
                         id={todo.id}

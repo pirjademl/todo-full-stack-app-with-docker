@@ -1,6 +1,6 @@
 ###################################################
 # Stage: base
-# 
+#
 # This base stage ensures all other stages are using the same base image
 # and provides common configuration for all stages, such as the working dir.
 ###################################################
@@ -19,14 +19,14 @@ FROM base AS client-base
 COPY client/package.json client/yarn.lock  ./
 RUN --mount=type=cache,id=yarn,target=/usr/local/share/.cache/yarn \
     yarn install
-COPY client/eslint.config.js client/index.html client/vite.config.ts client/tsconfig.json client/tsconfig.node.json client/tsconfig.app.json ./
+COPY client/eslint.config.js client/index.html client/vite.config.ts client/tsconfig.json client/tsconfig.node.json client/tsconfig.app.json  ./
 COPY client/public ./public
 COPY client/src ./src
 
 ###################################################
-# 
+#
 
-# This stage is used for development of the client application. It sets 
+# This stage is used for development of the client application. It sets
 # the default command to start the Vite development server.
 ###################################################
 FROM client-base AS client-dev
