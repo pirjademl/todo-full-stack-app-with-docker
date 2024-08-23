@@ -10,14 +10,13 @@ async function getNotes() {
 
 async function getNote(id: string) {
     const [result]: any = await pool.query(
-        `select id,title,content from todos where id=?`,
+        `select id,title,content,created_At from todos where id=?`,
         [id],
     );
     return result[0];
 }
 
 async function createNote({ title, content, completed }: createNotePayload) {
-    console.log(title, content);
     if (!title || !content || !completed) {
     }
 
