@@ -7,9 +7,9 @@ const app = express();
 
 const port = process.env.PORT || 3000;
 app.use(express.json());
-app.use(router);
 
-morgan('tiny');
+app.use(morgan('tiny'));
+app.use(router);
 try {
     app.listen(port, () => {
         console.log(`application listening at ${port}`);
